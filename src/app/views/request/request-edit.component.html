@@ -1,0 +1,122 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">Request Details #{{selectedId}}</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+					<form [formGroup]="editForm" (ngSubmit)="onSave()">
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="StudentId">Student</label>
+							<div class="col-md-10"> 
+								 <label class="col-form-label" for="Subject">{{request?.StudentName}}</label>	
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Subject">Subject</label>
+							<div class="col-md-10">
+								<label class="col-form-label" for="Subject">{{request?.Subject}}</label>	
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Category">Category</label>
+							<div class="col-md-10">
+								<label class="col-form-label" for="Subject">{{request?.Category}}</label>	
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Description">Description</label>
+							<div class="col-md-10">
+								<label class="col-form-label" for="Subject">{{request?.Description}}</label>	
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Remarks">Remarks</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Remarks" type="text" placeholder="Remarks"
+									formControlName="Remarks" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Remarks').touched || editForm.get('Remarks').dirty) && !editForm.get('Remarks').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Remarks').errors?.required">
+										Remarks Required.
+									</span>
+									<span *ngIf="editForm.get('Remarks').errors?.maxlength">
+										Remarks must not be longer than 100 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="RemarkDateTime">RemarkDateTime</label>
+							<div class="col-md-10">
+
+								<input type="text"
+								id="RemarkDateTime"
+								placeholder="Datepicker"
+								class="form-control"
+								formControlName="RemarkDateTime"
+								[bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+								bsDatepicker
+								[ngClass]="{'is-invalid': (editForm.get('RemarkDateTime').touched || editForm.get('RemarkDateTime').dirty) && !editForm.get('RemarkDateTime').valid }" />
+ 							<span class="invalid-feedback">
+									<span *ngIf="editForm.get('RemarkDateTime').errors?.required">
+										RemarkDateTime Required.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="AttachmentName">AttachmentName</label>
+							<div class="col-md-10">
+								<!-- <input class="form-control" id="AttachmentName" type="text" placeholder="AttachmentName"
+									formControlName="AttachmentName"
+									[ngClass]="{'is-invalid': (editForm.get('AttachmentName').touched || editForm.get('AttachmentName').dirty) && !editForm.get('AttachmentName').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('AttachmentName').errors?.required">
+										AttachmentName Required.
+									</span>
+									<span *ngIf="editForm.get('AttachmentName').errors?.maxlength">
+										AttachmentName must not be longer than 50 characters.
+									</span>
+								</span> -->
+								<app-upload (onUploadFinished)="uploadFinished($event)"></app-upload> 
+  							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Status">Status</label>
+							<div class="col-md-10">
+								<select id="Status" formControlName="Status" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('Status').touched || editForm.get('Status').dirty) && !editForm.get('Status').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of StatusList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Status').errors?.required">
+										Status Required.
+									</span>
+									<span *ngIf="editForm.get('Status').errors?.maxlength">
+										Status must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

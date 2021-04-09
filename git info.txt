@@ -1,0 +1,33 @@
+https://github.com/atazurelab/schoollatest-angular.git
+
+
+git init -Start track
+git status - for status 
+git add . - add files to local repo
+git commit -m "comment" - commit to local repo
+git remote add origin <url>
+git push -u origin master
+
+git pull - to pull from branch
+git push - to push to default branch
+git push --force https://github.com/atazurelab/MyApp.git master - to given branch
+git push --force https://github.com/atazurelab/SchoolGuru.git master - to given branch
+
+git branch <branchname>  -create branch
+git checkout <branchname> - to chnage branch
+git merge <branchname> to merge given branch to current branch
+
+git clone <url> to clone exiting repo to loacl
+
+
+
+// delete branch locally
+git branch -d localBranchName
+
+// delete branch remotely
+git push origin --delete remoteBranchName
+
+
+git branch -d fix/authentication
+
+git push <remote> --delete <branch>

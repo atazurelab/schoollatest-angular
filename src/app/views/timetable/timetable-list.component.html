@@ -1,0 +1,219 @@
+<div class="animated fadeIn">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <span class="header-caption">Timetable List</span>
+        <div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card-header-actions">
+          <app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+          </app-toolbar-details>
+          <!--   <app-toolbar-list (onItemClicked)="onOptionItemClicked($event)"></app-toolbar-list> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <app-display-alert></app-display-alert>
+        <app-modal-loader></app-modal-loader>
+        <label class="h5" [hidden]="isAdvanceView">Search By</label>
+        <div class="row mb-2">
+          <div class="col-6 text-center">
+            <div class="input-group" [hidden]="!isAdvanceView">
+              <select id="ClassCode" name="ClassCode" class="form-control" [(ngModel)]="objSearch.ClassCode">
+
+                <option value=""></option>
+                <option *ngFor="let obj of ClasstList" value="{{obj.Value}}">{{obj.Text}}</option>
+              </select>
+              <span class="input-group-append">
+                <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+                <a [routerLink]="" class="col-form-label ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                  ? 'More Options' : 'Hide
+                  Options'}}</a>
+                <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                  totalNoOfRecords}}</label>
+                
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-1 border-light p-1" id="collapseBasic" [collapse]="isAdvanceView" [isAnimated]="true">
+          <form action="" method="post" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-6 form-group row">
+                <label class="col-md-3 col-form-label" for="searchNameAdv">Name</label>
+                <div class="col-md-9">
+                  <input type="text" id="searchNameAdv" name="searchNameAdv" [(ngModel)]="objSearch.Name"
+                    class="form-control" placeholder="Enter Name.." autocomplete="off">
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label class="col-form-label">Within</label>
+                  <input type="number" id="searchDays" [(ngModel)]="objSearch.Days" name="searchDays"
+                    class="form-control input-group-append" placeholder="days">
+                  <span class="input-group-append">
+                    <label class="col-form-label">Days</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-6  form-group row">
+                <select class="col-md-3 form-control" name="searchAuditType" [(ngModel)]="objSearch.AuditType">
+                  <option value="Any">Any</option>
+                  <option value="Created">Created</option>
+                  <option value="Modified">Modified</option>
+                </select>
+
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label class="col-form-label">Within</label>
+                    <input type="number" id="searchDays" [(ngModel)]="objSearch.Days" name="searchDays"
+                      class="form-control input-group-append" placeholder="days">
+                    <span class="input-group-append">
+                      <label class="col-form-label">Days</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container col-12 text-center p-2">
+              <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+              <a [routerLink]="" class="col-form-label  ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                ? 'More Options' : 'Hide
+                Options'}}</a>
+              <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                totalNoOfRecords}}</label>
+            </div>
+
+          </form>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Period
+              </th>
+              <th>
+                Monday
+              </th>
+              <th>
+                Tuesday
+              </th>
+              <th>
+                Wednesday
+              </th>
+              <th>
+                Thursday
+              </th>
+              <th>
+                Friday
+              </th>
+              <th>
+                Saturday
+              </th>
+
+            </tr>
+
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of lstMain">
+
+              <td>{{obj.Period}}</td>
+
+              <td><a [routerLink]="" (click)="onEditDetails(obj,'Monday', template)">{{obj.Monday}}</a></td>
+              <td><a  [routerLink]="" (click)="onEditDetails(obj,'Tuesday', template)">{{obj.Tuesday}}</a></td>
+              <td><a [routerLink]="" (click)="onEditDetails(obj,'Wednesday', template)">{{obj.Wednesday}}</a></td>
+              <td><a  [routerLink]="" (click)="onEditDetails(obj,'Thursday', template)">{{obj.Thursday}}</a></td>
+              <td><a  [routerLink]="" (click)="onEditDetails(obj,'Friday', template)">{{obj.Friday}}</a></td>
+              <td><a  [routerLink]="" (click)="onEditDetails(obj,'Saturday', template)">{{obj.Saturday}}</a></td>
+
+
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="row">
+          <div class="col-xs-12 col-12">
+            <pagination [totalItems]="totalNoOfRecords" [maxSize]="10"  (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage">
+            </pagination>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">First modal</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="onSave()">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="TeacherId">Teacher</label>
+            <div class="col-md-10">
+              <select id="TeacherId" formControlName="TeacherId" class="form-control"
+                [ngClass]="{'is-invalid': (editForm.get('TeacherId').touched || editForm.get('TeacherId').dirty) && !editForm.get('TeacherId').valid }">
+                <option value=""></option>
+                <option *ngFor="let obj of TeacherList" value="{{obj.Id}}">{{obj.Text}}</option>
+              </select>
+              <span class="invalid-feedback">
+                <span *ngIf="editForm.get('TeacherId').errors?.required">
+                  Teacher Required.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="Subject">Subject</label>
+            <div class="col-md-10">
+              <select id="Subject" formControlName="Subject" class="form-control"
+                [ngClass]="{'is-invalid': (editForm.get('Subject').touched || editForm.get('Subject').dirty) && !editForm.get('Subject').valid }">
+                <option value=""></option>
+                <option *ngFor="let item of SubjectList" value="{{item}}">{{item}}</option>
+              </select> <span class="invalid-feedback">
+                <span *ngIf="editForm.get('Subject').errors?.required">
+                  Subject Required.
+                </span>
+                <span *ngIf="editForm.get('Subject').errors?.maxlength">
+                  Subject must not be longer than 20 characters.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label"></label>
+            <div class="col-md-9 col-form-label">
+              <div class="form-check form-check-inline mr-1">
+                <input class="form-check-input" type="checkbox" id="IsRepeat" value="option1"
+                  formControlName="IsRepeat"
+                  [ngClass]="{'is-invalid': (editForm.get('IsRepeat').touched || editForm.get('IsRepeat').dirty) && !editForm.get('IsRepeat').valid }">
+                <label class="form-check-label" for="IsRepeat">Repeate Same Schedule for whole week.</label>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="saveSchedule()">Save Schedule</button>
+        <button type="button" class="btn" (click)="closeSchedule()">Cancel</button>
+      </div>
+    </div><!-- /.modal-content --> 
+  </ng-template>
+</div>

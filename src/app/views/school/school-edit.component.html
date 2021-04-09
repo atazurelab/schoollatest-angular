@@ -1,0 +1,207 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">School Details #{{selectedId}}</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+					<form [formGroup]="editForm" (ngSubmit)="onSave()">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Name">Name</label>
+							<div class="col-md-10">
+								<label class="col-form-label-readonly" >{{school?.Name}}</label> 
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="ShortName">ShortName</label>
+							<div class="col-md-10">
+								<label class="col-form-label-readonly" >{{school?.ShortName}}</label> 
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Code">Code</label>
+							<div class="col-md-10">
+								<label class="col-form-label-readonly" >{{school?.Code}}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="RegisteredDate">RegisteredDate</label>
+							<div class="col-md-10"> 
+								<label class="col-form-label-readonly" >{{school?.RegisteredDate}}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="EmailID">EmailID</label>
+							<div class="col-md-10">
+								<label class="col-form-label-readonly" >{{school?.EmailID}}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Mobile">Mobile</label>
+							<div class="col-md-10">
+								<input class="form-control" id="Mobile" type="text" placeholder="Mobile"
+									formControlName="Mobile"
+									[ngClass]="{'is-invalid': (editForm.get('Mobile').touched || editForm.get('Mobile').dirty) && !editForm.get('Mobile').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Mobile').errors?.required">
+										Mobile Required.
+									</span>
+									<span *ngIf="editForm.get('Mobile').errors?.maxlength">
+										Mobile must not be longer than 10 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Board">Board</label>
+							<div class="col-md-10">
+								<select id="Board" formControlName="Board" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('Board').touched || editForm.get('Board').dirty) && !editForm.get('Board').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of BoardList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Board').errors?.required">
+										Board Required.
+									</span>
+									<span *ngIf="editForm.get('Board').errors?.maxlength">
+										Board must not be longer than 10 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Address">Address</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Address" type="text" placeholder="Address"
+									formControlName="Address" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Address').touched || editForm.get('Address').dirty) && !editForm.get('Address').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Address').errors?.required">
+										Address Required.
+									</span>
+									<span *ngIf="editForm.get('Address').errors?.maxlength">
+										Address must not be longer than 50 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="City">City</label>
+							<div class="col-md-10">
+								<select id="City" formControlName="City" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('City').touched || editForm.get('City').dirty) && !editForm.get('City').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of CityList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('City').errors?.required">
+										City Required.
+									</span>
+									<span *ngIf="editForm.get('City').errors?.maxlength">
+										City must not be longer than 50 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="State">State</label>
+							<div class="col-md-10">
+								<select id="State" formControlName="State" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('State').touched || editForm.get('State').dirty) && !editForm.get('State').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of StateList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('State').errors?.required">
+										State Required.
+									</span>
+									<span *ngIf="editForm.get('State').errors?.maxlength">
+										State must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="PIN">PIN</label>
+							<div class="col-md-10">
+								<input class="form-control" id="PIN" type="text" placeholder="PIN" formControlName="PIN"
+									[ngClass]="{'is-invalid': (editForm.get('PIN').touched || editForm.get('PIN').dirty) && !editForm.get('PIN').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('PIN').errors?.required">
+										PIN Required.
+									</span>
+									<span *ngIf="editForm.get('PIN').errors?.maxlength">
+										PIN must not be longer than 7 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-3 col-form-label"></label>
+							<div class="col-md-9 col-form-label">
+								<div class="form-check form-check-inline mr-1">
+									<input class="form-check-input" type="checkbox" id="IsDeleted" value="option1"
+										formControlName="IsDeleted"
+										[ngClass]="{'is-invalid': (editForm.get('IsDeleted').touched || editForm.get('IsDeleted').dirty) && !editForm.get('IsDeleted').valid }">
+									<label class="form-check-label" for="IsDeleted">IsDeleted</label>
+								</div>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('IsDeleted').errors?.required">
+										IsDeleted Required.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="ContactPerson">ContactPerson</label>
+							<div class="col-md-10">
+								<input class="form-control" id="ContactPerson" type="text" placeholder="ContactPerson"
+									formControlName="ContactPerson"
+									[ngClass]="{'is-invalid': (editForm.get('ContactPerson').touched || editForm.get('ContactPerson').dirty) && !editForm.get('ContactPerson').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('ContactPerson').errors?.required">
+										ContactPerson Required.
+									</span>
+									<span *ngIf="editForm.get('ContactPerson').errors?.maxlength">
+										ContactPerson must not be longer than 50 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="ContactNo">ContactNo</label>
+							<div class="col-md-10">
+								<input class="form-control" id="ContactNo" type="text" placeholder="ContactNo"
+									formControlName="ContactNo"
+									[ngClass]="{'is-invalid': (editForm.get('ContactNo').touched || editForm.get('ContactNo').dirty) && !editForm.get('ContactNo').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('ContactNo').errors?.required">
+										ContactNo Required.
+									</span>
+									<span *ngIf="editForm.get('ContactNo').errors?.maxlength">
+										ContactNo must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

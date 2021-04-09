@@ -1,0 +1,135 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">Subscription Details #{{selectedId}}</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+					<form [formGroup]="editForm" (ngSubmit)="onSave()">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="PlanId">PlanId</label>
+							<div class="col-md-10">
+								<select id="PlanId" formControlName="PlanId" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('PlanId').touched || editForm.get('PlanId').dirty) && !editForm.get('PlanId').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of PlanList" value="{{obj.Id}}">{{obj.Name}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('PlanId').errors?.required">
+										PlanId Required.
+									</span>
+									<span *ngIf="editForm.get('PlanId').errors?.maxlength">
+										PlanId must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="SchoolId">SchoolId</label>
+							<div class="col-md-10">
+								<select id="SchoolId" formControlName="SchoolId" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('SchoolId').touched || editForm.get('SchoolId').dirty) && !editForm.get('SchoolId').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of SchoolList" value="{{obj.Id}}">{{obj.Name}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('SchoolId').errors?.required">
+										SchoolId Required.
+									</span>
+									<span *ngIf="editForm.get('SchoolId').errors?.maxlength">
+										SchoolId must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="StartDate">StartDate</label>
+							<div class="col-md-10">
+
+								<input type="text"
+								id="StartDate"
+								placeholder="Datepicker"
+								class="form-control"
+								formControlName="StartDate"
+								[bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+								bsDatepicker
+								[ngClass]="{'is-invalid': (editForm.get('StartDate').touched || editForm.get('StartDate').dirty) && !editForm.get('StartDate').valid }" />
+
+							 								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('StartDate').errors?.required">
+										StartDate Required.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="EndDate">EndDate</label>
+							<div class="col-md-10">
+								<input type="text"
+								id="EndDate"
+								placeholder="Datepicker"
+								class="form-control"
+								formControlName="EndDate"
+								[bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+								bsDatepicker
+								[ngClass]="{'is-invalid': (editForm.get('EndDate').touched || editForm.get('EndDate').dirty) && !editForm.get('EndDate').valid }" />
+ 				 
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('EndDate').errors?.required">
+										EndDate Required.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Status">Status</label>
+							<div class="col-md-10">
+								<select id="Status" formControlName="Status" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('Status').touched || editForm.get('Status').dirty) && !editForm.get('Status').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of StatusList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Status').errors?.required">
+										Status Required.
+									</span>
+									<span *ngIf="editForm.get('Status').errors?.maxlength">
+										Status must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Description">Description</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Description" type="text" placeholder="Description"
+									formControlName="Description" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Description').touched || editForm.get('Description').dirty) && !editForm.get('Description').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Description').errors?.required">
+										Description Required.
+									</span>
+									<span *ngIf="editForm.get('Description').errors?.maxlength">
+										Description must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

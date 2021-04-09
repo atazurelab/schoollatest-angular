@@ -1,0 +1,178 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">Plan Details #{{selectedId}}</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+					<form [formGroup]="editForm" (ngSubmit)="onSave()">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Name">Name</label>
+							<div class="col-md-10">
+								<input class="form-control" id="Name" type="text" placeholder="Name"
+									formControlName="Name"
+									[ngClass]="{'is-invalid': (editForm.get('Name').touched || editForm.get('Name').dirty) && !editForm.get('Name').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Name').errors?.required">
+										Name Required.
+									</span>
+									<span *ngIf="editForm.get('Name').errors?.maxlength">
+										Name must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="StudentLimit">StudentLimit</label>
+							<div class="col-md-10">
+								<input class="form-control" id="StudentLimit" type="text" placeholder="StudentLimit"
+									formControlName="StudentLimit"
+									[ngClass]="{'is-invalid': (editForm.get('StudentLimit').touched || editForm.get('StudentLimit').dirty) && !editForm.get('StudentLimit').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('StudentLimit').errors?.required">
+										StudentLimit Required.
+									</span>
+									<span *ngIf="editForm.get('StudentLimit').errors?.maxlength">
+										StudentLimit must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="StaffLimit">StaffLimit</label>
+							<div class="col-md-10">
+								<input class="form-control" id="StaffLimit" type="text" placeholder="StaffLimit"
+									formControlName="StaffLimit"
+									[ngClass]="{'is-invalid': (editForm.get('StaffLimit').touched || editForm.get('StaffLimit').dirty) && !editForm.get('StaffLimit').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('StaffLimit').errors?.required">
+										StaffLimit Required.
+									</span>
+									<span *ngIf="editForm.get('StaffLimit').errors?.maxlength">
+										StaffLimit must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Amount">Amount</label>
+							<div class="col-md-10">
+								<input class="form-control" id="Amount" type="text" placeholder="Amount"
+									formControlName="Amount"
+									[ngClass]="{'is-invalid': (editForm.get('Amount').touched || editForm.get('Amount').dirty) && !editForm.get('Amount').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Amount').errors?.required">
+										Amount Required.
+									</span>
+									<span *ngIf="editForm.get('Amount').errors?.maxlength">
+										Amount must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+					
+
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="PlanType">PlanType</label>
+							<div class="col-md-10">
+								<select id="PlanType" formControlName="PlanType" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('PlanType').touched || editForm.get('PlanType').dirty) && !editForm.get('PlanType').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of PlanTypeList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('PlanType').errors?.required">
+										PlanType Required.
+									</span>
+									<span *ngIf="editForm.get('PlanType').errors?.maxlength">
+										PlanType must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="PaymentFrequency">PaymentFrequency</label>
+							<div class="col-md-10">
+								<select id="PaymentFrequency" formControlName="PaymentFrequency" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('PaymentFrequency').touched || editForm.get('PaymentFrequency').dirty) && !editForm.get('PaymentFrequency').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of PaymentFrequencyList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('PaymentFrequency').errors?.required">
+										PaymentFrequency Required.
+									</span>
+									<span *ngIf="editForm.get('PaymentFrequency').errors?.maxlength">
+										PaymentFrequency must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="FrequencyAmount">FrequencyAmount</label>
+							<div class="col-md-10">
+								<input class="form-control" id="FrequencyAmount" type="text"
+									placeholder="FrequencyAmount" formControlName="FrequencyAmount"
+									[ngClass]="{'is-invalid': (editForm.get('FrequencyAmount').touched || editForm.get('FrequencyAmount').dirty) && !editForm.get('FrequencyAmount').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('FrequencyAmount').errors?.required">
+										FrequencyAmount Required.
+									</span>
+									<span *ngIf="editForm.get('FrequencyAmount').errors?.maxlength">
+										FrequencyAmount must not be longer than 0 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Description">Description</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Description" type="text" placeholder="Description"
+									formControlName="Description" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Description').touched || editForm.get('Description').dirty) && !editForm.get('Description').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Description').errors?.required">
+										Description Required.
+									</span>
+									<span *ngIf="editForm.get('Description').errors?.maxlength">
+										Description must not be longer than 100 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-3 col-form-label">IsDeleted</label>
+							<div class="col-md-9 col-form-label">
+								<div class="form-check form-check-inline mr-1">
+									<input class="form-check-input" type="checkbox" id="IsDeleted" value="option1"
+										formControlName="IsDeleted"
+										[ngClass]="{'is-invalid': (editForm.get('IsDeleted').touched || editForm.get('IsDeleted').dirty) && !editForm.get('IsDeleted').valid }">
+									<label class="form-check-label" for="IsDeleted">IsDeleted</label>
+								</div>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('IsDeleted').errors?.required">
+										IsDeleted Required.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

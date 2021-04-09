@@ -1,0 +1,187 @@
+<div class="animated fadeIn">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <span class="header-caption">FeeDetail List</span>
+        <div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card-header-actions">
+          <app-toolbar-list (onItemClicked)="onOptionItemClicked($event)"></app-toolbar-list>
+        </div>
+      </div>
+      <div class="card-body">
+        <app-display-alert></app-display-alert>
+        <app-modal-loader></app-modal-loader>
+        <label class="h5" [hidden]="isAdvanceView">Search By</label>
+        <div class="row mb-2">
+          <div class="col-6 text-center">
+            <div class="input-group" [hidden]="!isAdvanceView">
+             <!--  <input type="text" id="searchName" name="searchName" class="form-control" placeholder="Type name"> -->
+               
+              <input name="searchName"  [(ngModel)] = "objSearch.StudentName"  [typeahead]="StudentList"
+              typeaheadOptionField="Text" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+              (typeaheadOnSelect)="onStudentSelect($event)" placeholder="Typeahead inside a form"
+              class="form-control"> 
+
+              <span class="input-group-append">
+                <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+                <a [routerLink]="" class="col-form-label ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                  ? 'More Options' : 'Hide
+                  Options'}}</a>
+                <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                  totalNoOfRecords}}</label>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-1 border-light p-1" id="collapseBasic" [collapse]="isAdvanceView" [isAnimated]="true">
+          <form action="" method="post" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-6 form-group row">
+                <label class="col-md-3 col-form-label" for="searchNameAdv">Name</label>
+                <div class="col-md-9">
+                  <input type="text" id="searchNameAdv" name="searchNameAdv" [(ngModel)]="objSearch.Name"
+                    class="form-control" placeholder="Enter Name.." autocomplete="off">
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label class="col-form-label">Records</label>
+                  <select class="col-md-3 form-control"  name="searchAuditType" [(ngModel)]="objSearch.AuditType">
+                    <option value="Any">Any</option>
+                    <option value="CreatedDateTime">Created</option>
+                    <option value="ModifiedDateTime">Modified</option>
+                  </select>
+
+                  <label class="col-form-label">Within</label>
+                  <input type="number" id="searchDays" [(ngModel)]="objSearch.Days" name="searchDays"
+                    class="col-md-2 form-control input-group-append" placeholder="days">
+                  <span class="input-group-append">
+                    <label class="col-form-label">Days</label>
+                  </span>
+                  <label class="col-form-label">From date</label>
+                  <input type="date" id="RangeDate" [(ngModel)]="RangeDate" name="RangeDate"
+                    class="form-control input-group-append" > 
+
+                </div>
+               
+
+              </div> 
+            </div>
+
+            <div class="container col-12 text-center p-2">
+              <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+              <a [routerLink]="" class="col-form-label  ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                ? 'More Options' : 'Hide
+                Options'}}</a>
+              <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                totalNoOfRecords}}</label>
+            </div>
+
+          </form>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Id';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Id'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Id
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Amount';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Amount'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Amount
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'DueDate';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'DueDate'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  DueDate
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Status';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Status'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Status
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'StudentCode';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'StudentCode'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  StudentCode
+                </a>
+              </th>
+              
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Description';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Description'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Description
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'ReferenceNo';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'ReferenceNo'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  ReferenceNo
+                </a>
+              </th>
+
+
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of lstMain  | orderBy: ordertype + orderByField">
+              <td><a routerLinkActive='active' [routerLink]="['/feeDetails/edit', obj.Id]">{{obj.Id}}</a> </td>
+              <td>{{obj.Amount | number:'1.0':'en-US' }}</td>
+              <td>{{obj.DueDate | date:'dd-MMM-yyyy' }}</td>
+              <td>{{obj.Status}}</td>
+              <td>{{obj.StudentCode}}</td> 
+              <td>{{obj.Description}}</td>
+              <td>{{obj.ReferenceNo}}</td>
+
+
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-xs-12 col-12"> 
+            <pagination [totalItems]="totalNoOfRecords" [maxSize]="maxPageCount"  (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

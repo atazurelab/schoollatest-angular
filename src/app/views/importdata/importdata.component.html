@@ -1,0 +1,266 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="header-caption">Import Data</span>
+                    <div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="card-header-actions">
+                        <app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+                        </app-toolbar-details>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <app-display-alert></app-display-alert>
+                    <app-modal-loader></app-modal-loader>
+
+                    <form   method="post"  class="form-horizontal">
+
+                        <div class="form-group row">
+                            <div class="col-6 form-group row">
+                                <label class="col-md-4 col-form-label" for="mylistType">Import</label>
+                                <div class="col-md-8">
+                                    <select name="mylistType"  [(ngModel)]="listType" class="form-control">
+                                        <option value="Student">Student</option>
+                                        <option value="ClassDetail">ClassDetail</option>
+                                        <option value="Staff">Staff</option>
+                                        <option value="Period">Period</option>
+                                        <option value="Notice">Notice</option>
+                                        <option value="Fee">Fee</option>
+                                        <option value="TimeTable">TimeTable</option>
+                                        <option value="Holiday">Holiday</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="file" (change)="onFileChange($event)" multiple="false" />
+                                    <span class="input-group-append">
+                                        <label class="col-form-label  ml-2"> {{listType}} Records #:
+                                            {{data.length}}</label>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                    <div class="table-responsive" *ngIf="listType == 'Student'">
+                        <div>Total Student Records : {{students.length}} </div>
+
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name </th>
+                                <th> Code </th>
+                                <th> Gender </th>
+                                <th> ClassCode </th>
+                                <th> EmailId </th>
+                                <th> Mobile </th>
+                                <th> DateOfBirth </th>
+                            </tr>
+                            <tr *ngFor="let obj of students;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Name}}</td>
+                                <td>{{obj.Code}}</td>
+                                <td>{{obj.Gender}}</td>
+                                <td>{{obj.ClassCode}}</td>
+                                <td>{{obj.EmailId}}</td>
+                                <td>{{obj.Mobile}}</td>
+                                <td>{{obj.DateOfBirth | date:'dd-MMM-yyyy' }}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'Staff'">
+                        <div>Total Teacher Records : {{staffs.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name </th>
+                                <th> Code </th>
+                                <th> Gender </th>
+                                <th> ClassCode </th>
+                                <th> EmailId </th>
+                                <th> Mobile </th>
+                                <th> IsTeacher </th>
+                                <th> DateOfBirth </th>
+                            </tr>
+                            <tr *ngFor="let obj of staffs;  let i = index"> 
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Name}}</td>
+                                <td>{{obj.Code}}</td>
+                                <td>{{obj.Gender}}</td>
+                                <td>{{obj.ClassCode}}</td>
+                                <td>{{obj.EmailId}}</td>
+                                <td>{{obj.Mobile}}</td>
+                                <td>{{obj.IsTeacher}}</td>
+                                <td>{{obj.DateOfBirth | date:'dd-MMM-yyyy' }}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'ClassDetail'">
+                        <div>Total Class Records : {{classes.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name </th>
+                                <th> ClassCode </th>
+                                <th> Description </th>
+
+                            </tr>
+                            <tr *ngFor="let obj of classes;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Name}}</td>
+                                <td>{{obj.ClassCode}}</td>
+                                <td>{{obj.Description}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'Period'">
+                        <div>Total Period Records : {{periods.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name </th>
+                                <th> Description </th>
+
+                            </tr>
+                            <tr *ngFor="let obj of periods;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Name}}</td>
+                                <td>{{obj.Description}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'Holiday'">
+                        <div>Total Holiday Records : {{holidays.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name </th>
+                                <th>Start Date </th>
+                                <th>End Date </th>
+                                <th> Description </th>
+
+                            </tr>
+                            <tr *ngFor="let obj of holidays;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Name}}</td>
+                                <td>{{obj.StartDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{obj.EndDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{obj.Description}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'Notice'">
+                        <div>Total Notice Records : {{noticeboards.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Subject </th>
+                                <th>Notice</th>
+                                <th>NoticeDateTime </th>
+
+
+                            </tr>
+                            <tr *ngFor="let obj of noticeboards;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.Subject}}</td>
+                                <td>{{obj.Notice}}</td>
+                                <td>{{obj.NoticeDateTime | date:'dd-MMM-yyyy' }}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'Fee'">
+                        <div>Total Fees Records : {{fees.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>StudentName </th>
+                                <th>StudentCode </th>
+                                <th>Amount </th>
+                                <th>DueDate</th>
+                                <th>Description </th>
+                                <th>Status </th>
+
+                            </tr>
+                            <tr *ngFor="let obj of fees;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.StudentName}}</td>
+                                <td>{{obj.StudentCode}}</td>
+                                <td>{{obj.Amount}}</td>
+                                <td>{{obj.DueDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{obj.Description}}</td>
+                                <td>{{obj.Status}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="listType == 'TimeTable'">
+                        <div>Total Timetable Records : {{timetables.length}} </div>
+                        <table class="table table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>ClassCode </th>
+                                <th>Period </th>
+                                <th>Monday </th>
+                                <th>Tuesday</th>
+                                <th>Wednesday </th>
+                                <th>Thursday </th>
+                                <th>Friday </th>
+                                <th>Saturday </th>
+                                <th>Sunday </th>
+                            </tr>
+                            <tr *ngFor="let obj of timetables;  let i = index">
+                                <th style="width: 10px">{{i + 1}}</th>
+                                <td>{{obj.ClassCode}}</td>
+                                <td>{{obj.Period}}</td>
+                                <td>{{obj.Monday}}</td>
+                                <td>{{obj.Tuesday}}</td>
+                                <td>{{obj.Wednesday}}</td>
+                                <td>{{obj.Thursday}}</td>
+                                <td>{{obj.Friday}}</td>
+                                <td>{{obj.Saturday}}</td>
+                                <td>{{obj.Sunday}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+
+
+
+                    <!-- <div class="form-group row">  
+                            <table class="sjs-table">
+                                <tr *ngFor="let row of students">
+                                    <td *ngFor="let val of row">
+                                        {{val}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

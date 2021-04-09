@@ -1,0 +1,108 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">New Request</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+
+					<form [formGroup]="editForm" (ngSubmit)="Save()">
+
+
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="StudentId">Student</label>
+							<div class="col-md-10">
+
+								<input formControlName="StudentName" [typeahead]="StudentList"
+									typeaheadOptionField="Text" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+									(typeaheadOnSelect)="onStudentSelect($event)" placeholder="Typeahead inside a form"
+									class="form-control">
+
+
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('StudentId').errors?.required">
+										Student Required.
+									</span>
+									<span *ngIf="editForm.get('StudentId').errors?.maxlength">
+										Student must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Subject">Subject</label>
+							<div class="col-md-10">
+								<input class="form-control" id="Subject" type="text" placeholder="Subject"
+									formControlName="Subject"
+									[ngClass]="{'is-invalid': (editForm.get('Subject').touched || editForm.get('Subject').dirty) && !editForm.get('Subject').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Subject').errors?.required">
+										Subject Required.
+									</span>
+									<span *ngIf="editForm.get('Subject').errors?.maxlength">
+										Subject must not be longer than 50 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Category">Category</label>
+							<div class="col-md-10">
+								<select id="Category" formControlName="Category" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('Category').touched || editForm.get('Category').dirty) && !editForm.get('Category').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of CategoryList">{{obj}}</option>
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Category').errors?.required">
+										Category Required.
+									</span>
+									<span *ngIf="editForm.get('Category').errors?.maxlength">
+										Category must not be longer than 20 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Description">Description</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Description" type="text" placeholder="Description"
+									formControlName="Description" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Description').touched || editForm.get('Description').dirty) && !editForm.get('Description').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Description').errors?.required">
+										Description Required.
+									</span>
+									<span *ngIf="editForm.get('Description').errors?.maxlength">
+										Description must not be longer than 100 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ng-template #studentListTemplate let-model="item" let-index="index">
+		<h5>This is: {{model | json}} Index: {{ index }}</h5>
+	</ng-template>
+
+</div>

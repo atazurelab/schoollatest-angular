@@ -1,0 +1,59 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<span class="header-caption">New NoticeBoard</span>
+					<div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="card-header-actions">
+						<app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm">
+						</app-toolbar-details>
+					</div>
+				</div>
+				<div class="card-body">
+					<app-display-alert></app-display-alert>
+					<app-modal-loader></app-modal-loader>
+
+					<form [formGroup]="editForm" (ngSubmit)="Save()">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Subject">Subject</label>
+							<div class="col-md-10">
+								<input class="form-control" id="Subject" type="text" placeholder="Subject"
+									formControlName="Subject"
+									[ngClass]="{'is-invalid': (editForm.get('Subject').touched || editForm.get('Subject').dirty) && !editForm.get('Subject').valid }" />
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Subject').errors?.required">
+										Subject Required.
+									</span>
+									<span *ngIf="editForm.get('Subject').errors?.maxlength">
+										Subject must not be longer than 50 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="Notice">Notice</label>
+							<div class="col-md-10">
+								<textarea class="form-control" id="Notice" type="text" placeholder="Notice"
+									formControlName="Notice" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('Notice').touched || editForm.get('Notice').dirty) && !editForm.get('Notice').valid }"> </textarea>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('Notice').errors?.required">
+										Notice Required.
+									</span>
+									<span *ngIf="editForm.get('Notice').errors?.maxlength">
+										Notice must not be longer than 2000 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

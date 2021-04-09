@@ -1,0 +1,183 @@
+<div class="animated fadeIn">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <span class="header-caption">New DailyClassUpdate</span>
+        <div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card-header-actions">
+          <app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm"></app-toolbar-details>
+        </div>
+      </div>
+        <div class="card-body">
+          <app-display-alert></app-display-alert>
+          <app-modal-loader></app-modal-loader> 
+          
+          <form [formGroup]="editForm" (ngSubmit)="Save()">  
+									<div class="form-group row">
+							<label class="col-md-2 col-form-label" for="ClassCode">ClassCode</label>
+							<div class="col-md-10">								
+								<select id="ClassCode" formControlName="ClassCode" class="form-control"
+									[ngClass]="{'is-invalid': (editForm.get('ClassCode').touched || editForm.get('ClassCode').dirty) && !editForm.get('ClassCode').valid }">
+									<option value=""></option>
+									<option *ngFor="let obj of ClassCodeList">{{obj}}</option>  
+								</select>
+								<span class="invalid-feedback">
+									<span *ngIf="editForm.get('ClassCode').errors?.required">
+										ClassCode Required.
+									</span>
+									<span *ngIf="editForm.get('ClassCode').errors?.maxlength">
+										ClassCode must not be longer than 10 characters.
+									</span>
+								</span>
+							</div>
+						</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="SchoolCode">SchoolCode</label>
+	<div class="col-md-10">
+		<input class="form-control" id="SchoolCode" type="text" placeholder="SchoolCode" formControlName="SchoolCode"
+		[ngClass]="{'is-invalid': (editForm.get('SchoolCode').touched || editForm.get('SchoolCode').dirty) && !editForm.get('SchoolCode').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('SchoolCode').errors?.required">
+			SchoolCode Required.
+			</span>
+			<span *ngIf="editForm.get('SchoolCode').errors?.maxlength">
+			SchoolCode must not be longer than 10 characters.
+			</span>
+		</span>
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="ClassWork">ClassWork</label>
+	<div class="col-md-10">
+		<textarea class="form-control" id="ClassWork" type="text" placeholder="ClassWork" formControlName="ClassWork" rows="5"
+		[ngClass]="{'is-invalid': (editForm.get('ClassWork').touched || editForm.get('ClassWork').dirty) && !editForm.get('ClassWork').valid }" > </textarea>
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('ClassWork').errors?.required">
+			ClassWork Required.
+			</span>
+			<span *ngIf="editForm.get('ClassWork').errors?.maxlength">
+			ClassWork must not be longer than 100 characters.
+			</span>
+		</span>
+	</div>
+</div> 
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="HomeWork">HomeWork</label>
+	<div class="col-md-10">
+		<textarea class="form-control" id="HomeWork" type="text" placeholder="HomeWork" formControlName="HomeWork" rows="5"
+		[ngClass]="{'is-invalid': (editForm.get('HomeWork').touched || editForm.get('HomeWork').dirty) && !editForm.get('HomeWork').valid }" > </textarea>
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('HomeWork').errors?.required">
+			HomeWork Required.
+			</span>
+			<span *ngIf="editForm.get('HomeWork').errors?.maxlength">
+			HomeWork must not be longer than 100 characters.
+			</span>
+		</span>
+	</div>
+</div> 
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="UpdateForDate">UpdateForDate</label>
+	<div class="col-md-10">
+		<input type="text"
+		id="UpdateForDate"
+		placeholder="UpdateForDate"
+		class="form-control"
+		formControlName="UpdateForDate"
+		[bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+		bsDatepicker
+		[ngClass]="{'is-invalid': (editForm.get('UpdateForDate').touched || editForm.get('UpdateForDate').dirty) && !editForm.get('UpdateForDate').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('UpdateForDate').errors?.required">
+			UpdateForDate Required.
+			</span> 
+		</span>
+	</div>
+</div>  
+ 
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="Period">Period</label>
+	<div class="col-md-10">
+		<input class="form-control" id="Period" type="text" placeholder="Period" formControlName="Period"
+		[ngClass]="{'is-invalid': (editForm.get('Period').touched || editForm.get('Period').dirty) && !editForm.get('Period').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('Period').errors?.required">
+			Period Required.
+			</span>
+			<span *ngIf="editForm.get('Period').errors?.maxlength">
+			Period must not be longer than 20 characters.
+			</span>
+		</span>
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="Subject">Subject</label>
+	<div class="col-md-10">
+		<input class="form-control" id="Subject" type="text" placeholder="Subject" formControlName="Subject"
+		[ngClass]="{'is-invalid': (editForm.get('Subject').touched || editForm.get('Subject').dirty) && !editForm.get('Subject').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('Subject').errors?.required">
+			Subject Required.
+			</span>
+			<span *ngIf="editForm.get('Subject').errors?.maxlength">
+			Subject must not be longer than 20 characters.
+			</span>
+		</span>
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="Teacher">Teacher</label>
+	<div class="col-md-10">
+		<input class="form-control" id="Teacher" type="text" placeholder="Teacher" formControlName="Teacher"
+		[ngClass]="{'is-invalid': (editForm.get('Teacher').touched || editForm.get('Teacher').dirty) && !editForm.get('Teacher').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('Teacher').errors?.required">
+			Teacher Required.
+			</span>
+			<span *ngIf="editForm.get('Teacher').errors?.maxlength">
+			Teacher must not be longer than 50 characters.
+			</span>
+		</span>
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="SchoolId">SchoolId</label>
+	<div class="col-md-10">
+		<input class="form-control" id="SchoolId" type="text" placeholder="SchoolId" formControlName="SchoolId"
+		[ngClass]="{'is-invalid': (editForm.get('SchoolId').touched || editForm.get('SchoolId').dirty) && !editForm.get('SchoolId').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('SchoolId').errors?.required">
+			SchoolId Required.
+			</span>
+			<span *ngIf="editForm.get('SchoolId').errors?.maxlength">
+			SchoolId must not be longer than 0 characters.
+			</span>
+		</span>
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-md-2 col-form-label" for="ClassId">ClassId</label>
+	<div class="col-md-10">
+		<input class="form-control" id="ClassId" type="text" placeholder="ClassId" formControlName="ClassId"
+		[ngClass]="{'is-invalid': (editForm.get('ClassId').touched || editForm.get('ClassId').dirty) && !editForm.get('ClassId').valid }" />
+		<span class="invalid-feedback">
+			<span *ngIf="editForm.get('ClassId').errors?.required">
+			ClassId Required.
+			</span>
+			<span *ngIf="editForm.get('ClassId').errors?.maxlength">
+			ClassId must not be longer than 0 characters.
+			</span>
+		</span>
+	</div>
+</div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,37 @@
+<div class="animated fadeIn">
+  <app-display-alert></app-display-alert>
+  <app-modal-loader></app-modal-loader>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Publish Status
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Update For</th>
+                <th>Last UpdatedOn</th>
+                <th>Approved</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let obj of lstMain">
+                <td>{{obj.EntityName}}</td>
+                <td>{{obj.PublishOn}}</td>
+                <td>{{obj.IsApproved}}</td> 
+                <td>
+                  <span class="badge badge-success">{{obj.Status}}</span>
+                </td>
+              </tr> 
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>

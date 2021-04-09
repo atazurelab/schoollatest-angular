@@ -1,0 +1,30 @@
+<div class="container col-md-12 text-right">
+  <button type="button" class="btn btn-success" [disabled]="!form.valid" (click)="confirmSave()">Save</button>
+  <button type="button" class="btn btn-secondary" [disabled]="!form.dirty" (click)="confirmCancel()">Cancel</button>
+  <button type="button" class="btn btn-danger"  (click)="confirmDelete()">Delete</button> 
+  <button type="button" class="btn btn-warning" (click)="confirmBack()">Back</button>
+    <button   *ngFor="let b in buttons" type="button" class="btn btn-warning" (click)="confirmBack('a')">{{b?.Text}}</button>
+</div>
+ 
+ 
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div  [ngClass]="['modal-dialog modal' + messageStyle]"     role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Action&hellip;</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{confirmMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
+        <button type="button" [ngClass]="['btn btn' + messageStyle]"   (click)="onButtonClicked(curAction)">{{confirmButtonText}}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,207 @@
+<div class="animated fadeIn">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <span class="header-caption">DailyClassUpdate List</span>
+        <div [hidden]="!isLoading" class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card-header-actions">  
+           <app-toolbar-details (onItemClicked)="onOptionItemClicked($event)" [form]="editForm"></app-toolbar-details>
+        </div>
+      </div>
+      <div class="card-body">
+        <app-display-alert></app-display-alert>
+        <app-modal-loader></app-modal-loader>
+        <label class="h5" [hidden]="isAdvanceView">Search By</label>
+        <div class="row mb-2">
+          <div class="col-12 text-center">
+            <div class="input-group" [hidden]="!isAdvanceView">
+              
+              <label class="col-form-label"  >Class : </label>
+              <select id="ClassCode" name="ClassCode" class="form-control" [(ngModel)] = "objSearch.ClassCode">
+                 <option value=""></option>
+                <option *ngFor="let obj of ClasstList" value="{{obj.Value}}">{{obj.Text}}</option>
+              </select>
+
+              <label class="col-form-label"  >For Date : </label>
+              <input type="date" id="UpdateForDate" name="UpdateForDate" [(ngModel)]="objSearch.UpdateForDate" class="col-2 form-control" placeholder="For Date">
+             
+             
+              <span class="input-group-append">
+                <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+                <a [routerLink]="" class="col-form-label ml-2" (click)="clearSearch()">Clear</a>
+                <a [routerLink]="" class="col-form-label ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                  ? 'More Options' : 'Hide
+                  Options'}}</a>
+                <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                  totalNoOfRecords}}</label>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-1 border-light p-1" id="collapseBasic" [collapse]="isAdvanceView" [isAnimated]="true">
+          <form action="" method="post" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-6 form-group row">
+                <label class="col-md-3 col-form-label" for="searchNameAdv">Name</label>
+                <div class="col-md-9">
+                  <input type="text" id="searchNameAdv" name="searchNameAdv" [(ngModel)]="objSearch.Name"
+                    class="form-control" placeholder="Enter Name.." autocomplete="off">
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label class="col-form-label">Within</label>
+                  <input type="number" id="searchDays" [(ngModel)]="objSearch.Days" name="searchDays"
+                    class="form-control input-group-append" placeholder="days">
+                  <span class="input-group-append">
+                    <label class="col-form-label">Days</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-6  form-group row">
+                <select class="col-md-3 form-control" name="searchAuditType" [(ngModel)]="objSearch.AuditType">
+                  <option value="Any">Any</option>
+                  <option value="Created">Created</option>
+                  <option value="Modified">Modified</option>
+                </select>
+
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label class="col-form-label">Within</label>
+                    <input type="number" id="searchDays" [(ngModel)]="objSearch.Days" name="searchDays"
+                      class="form-control input-group-append" placeholder="days">
+                    <span class="input-group-append">
+                      <label class="col-form-label">Days</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container col-12 text-center p-2">
+              <button type="button" class="btn btn-sm btn-primary" (click)="search()">Search</button>
+              <a [routerLink]="" class="col-form-label ml-2" (click)="clearSearch()">Clear</a>
+              <a [routerLink]="" class="col-form-label  ml-2" (click)="isAdvanceView = !isAdvanceView;">{{isAdvanceView
+                ? 'More Options' : 'Hide
+                Options'}}</a>
+              <label class="col-form-label  ml-2"> {{isLoading ? 'Searching...' : ' Found Records :' +
+                totalNoOfRecords}}</label>
+            </div>
+
+          </form>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Period';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Period'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Period
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'Subject';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'Subject'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  Subject
+                </a>
+              </th>
+              
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'ClassWork';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'ClassWork'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  ClassWork
+                </a>
+              </th>
+              <th>
+                <a class="col-header-style"
+                  (click)="orderByField = 'HomeWork';  ordertype= (ordertype === '+'  ? '-' : '+')  ; reverseSort = !reverseSort">
+                  <span [hidden]="orderByField !== 'HomeWork'"
+                    [ngClass]="{'fa fa-sort-amount-desc' : reverseSort === true, 'fa fa-sort-amount-asc' : reverseSort === false}">
+                  </span>
+                  HomeWork
+                </a>
+              </th> 
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of lstMain  | orderBy: ordertype + orderByField">
+              <td><a [routerLink]="" (click)="onEditDetails(obj , template)">{{obj.Period}}</a>      </td> 
+              <td>{{obj.Subject}}</td> 
+              <td>{{obj.ClassWork}}</td>
+              <td>{{obj.HomeWork}}</td> 
+            </tr>
+          </tbody>
+        </table> 
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">First modal</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <form [formGroup]="editForm" >
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="TeacherId">Class Work</label>
+            <div class="col-md-10">
+              <textarea class="form-control" id="ClassWork" type="text" placeholder="ClassWork"
+									formControlName="ClassWork" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('ClassWork').touched || editForm.get('ClassWork').dirty) && !editForm.get('ClassWork').valid }"> </textarea>
+                  <span class="invalid-feedback"> 
+                    <span *ngIf="editForm.get('ClassWork').errors?.maxlength">
+                      ClassWork must not be longer than 100 characters.
+                    </span>
+                  </span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="HomeWork">Home Work</label>
+            <div class="col-md-10">
+              <textarea class="form-control" id="HomeWork" type="text" placeholder="HomeWork"
+									formControlName="HomeWork" rows="5"
+									[ngClass]="{'is-invalid': (editForm.get('HomeWork').touched || editForm.get('HomeWork').dirty) && !editForm.get('HomeWork').valid }"> </textarea>
+              <span class="invalid-feedback"> 
+                <span *ngIf="editForm.get('HomeWork').errors?.maxlength">
+                  HomeWork must not be longer than 100 characters.
+                </span>
+              </span>
+            </div>
+          </div> 
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="updateDCU()">Update</button>
+        <button type="button" class="btn" (click)="closeSchedule()">Cancel</button>
+      </div>
+    </div><!-- /.modal-content --> 
+  </ng-template>
+</div>
