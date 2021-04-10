@@ -3,7 +3,7 @@
   <button type="button" class="btn btn-secondary" [disabled]="!form.dirty" (click)="confirmCancel()">Cancel</button>
   <button type="button" class="btn btn-danger"  (click)="confirmDelete()">Delete</button> 
   <button type="button" class="btn btn-warning" (click)="confirmBack()">Back</button>
-    <button   *ngFor="let b in buttons" type="button" class="btn btn-warning" (click)="confirmBack('a')">{{b?.Text}}</button>
+  
 </div>
  
  
